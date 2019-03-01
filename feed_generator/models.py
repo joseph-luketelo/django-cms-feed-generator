@@ -1,6 +1,6 @@
 from cms.models import Page
 from django.db import models
-from fields import ImageField
+from feed_generator.fields import ImageField
 
 class PageRSSFeed(models.Model):
     page = models.OneToOneField(Page)
