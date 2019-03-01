@@ -3,7 +3,7 @@ from django.forms.widgets import TextInput
 from django.conf import settings
 from django.core.urlresolvers import reverse
 from django.utils.safestring import mark_safe
-from django.utils.encoding import force_text
+# from django.utils.encoding import force_unicode
 
 
 
@@ -13,7 +13,7 @@ class ImageWidget(TextInput):
     """
     def render(self, name, value, attrs=None):
         current_site = self.attrs.pop('current_site', None)
-        attrs.update({'value': force_text(self._format_value(value)) if value else ''})
+        # attrs.update({'value': force_unicode(self._format_value(value)) if value else ''})
         attrs.update(self.attrs)
 
         final_attrs = self.build_attrs(attrs, type=self.input_type, name=name)
@@ -37,7 +37,7 @@ class InputWidget(TextInput):
         Update short description input size
     """
     def render(self, name, value, attrs=None):
-        attrs.update({'value': force_text(self._format_value(value)) if value else ''})
+        # attrs.update({'value': force_unicode(self._format_value(value)) if value else ''})
         attrs.update(self.attrs)
         final_attrs = self.build_attrs(attrs, type=self.input_type, name=name)
         return mark_safe(u'<input%s />' % flatatt(final_attrs))
