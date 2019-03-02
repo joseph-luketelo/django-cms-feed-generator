@@ -1,9 +1,10 @@
 from django.conf.urls import *
 from feed_generator.feeds import RSSFeed
+from django.conf.urls import include, url
 
-urlpatterns = patterns('',
+urlpatterns = url('',
     (r'^rss/$', RSSFeed()),
 )
-urlpatterns += patterns('feed_generator.views',
+urlpatterns += url('feed_generator.views',
     (r'^get_file/', 'get_file'),
 )
