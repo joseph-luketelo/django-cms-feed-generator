@@ -6,7 +6,7 @@ from django.utils.feedgenerator import Rss201rev2Feed
 from cms.models.pagemodel import Page
 from feed_generator.models import PageRSSFeed
 from feed_generator.settings import exclude_keyword, feed_limit
-
+from django.http import HttpResponse
 
 def _page_in_rss(self, page):
     try:
@@ -26,10 +26,10 @@ class CustomFeedGenerator(Rss201rev2Feed):
         
     def rss_attributes(self):
         """ Overriden this method to add media namespace(needed because we added media tags) """
-        return {u"version": self._version,
+        return HttpResponse({u"version": self._version,
                 u"xmlns:media": u"http://search.yahoo.com/mrss/",
                 "xmlns:atom": u"http://www.w3.org/2005/Atom"
-                }
+                })
 
     def add_item_elements(self, handler, item):
         super(CustomFeedGenerator, self).add_item_elements(handler, item)
@@ -88,5 +88,5 @@ class RSSFeed(Feed):
             result['image_url']= page_rss_feed.image_url
         except PageRSSFeed.DoesNotExist:
             pass
-        return result
+        return HttpResponse(result)
 
