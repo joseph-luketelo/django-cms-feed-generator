@@ -5,7 +5,7 @@ from django.contrib.syndication.views import Feed
 from django.utils.feedgenerator import Rss201rev2Feed
 from cms.models.pagemodel import Page
 from feed_generator.models import PageRSSFeed
-from settings import exclude_keyword, feed_limit
+from feed_generator.settings import exclude_keyword, feed_limit
 
 
 def _page_in_rss(page):
