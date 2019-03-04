@@ -34,51 +34,20 @@ class CustomFeedGenerator(Rss201rev2Feed):
         handler.addQuickElement(u"media:thumbnail", attrs={'url':item['image_url']})
 
 class RSSFeed(Feed):
-    link = "/"
-    # feed_type = CustomFeedGenerator
-   
-    def title(self):
-        return Site.objects.get_current().name
-
-    def description(self):
-        return "%s updates" % Site.objects.get_current().domain
+    Sitetitle = "Police beat site news"
+    link = "/sitenews/"
+    description = "Updates on changes and additions to police beat central."
 
     def items(self):
-        site = Site.objects.get_current()
-        feed_pages = Page.objects.published(site=site).order_by('-publication_date')
-        return [feed_page for feed_page in feed_pages if _page_in_rss(feed_page)][:feed_limit]
+        return Site.objects.all()
 
     def item_title(self, item):
-        # SEO page title or basic title
-        title = item.get_page_title() or item.get_title()
-        return title[:60] if title else ''
+        return item.title
 
     def item_description(self, item):
-        # SEO page description
-        return item.get_meta_description()[:400] if item.get_meta_description() else ''
+        return item.description
 
+    # item_link is only needed if NewsItem has no get_absolute_url method.
     def item_link(self, item):
-        #Page url
         return item.get_absolute_url()
-
-    def item_pubdate(self, item):
-        #Page publication date
-        return item.publication_date
-    
-    def item_extra_kwargs(self, obj):
-        """
-        Returns an extra keyword arguments dictionary that is used with
-        the `add_item` call of the feed generator.
-        Add the 'tags' field of the Page, to be used by the custom feed generator.
-        """
-        result = {'tags':obj.get_meta_keywords(),
-                  'short_description':obj.get_meta_description()[:90] if obj.get_meta_description() else '',
-                  'image_url':''}
-        try:
-            page_rss_feed = PageRSSFeed.objects.get(page=obj)
-            result['short_description']= page_rss_feed.short_description[:90]
-            result['image_url']= page_rss_feed.image_url
-        except PageRSSFeed.DoesNotExist:
-            pass
-        return result
 
