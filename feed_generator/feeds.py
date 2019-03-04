@@ -35,7 +35,7 @@ class CustomFeedGenerator(Rss201rev2Feed):
 
 class RSSFeed(Feed):
     link = "/"
-    feed_type = CustomFeedGenerator
+    # feed_type = CustomFeedGenerator
    
     def title(self):
         return Site.objects.get_current().name
