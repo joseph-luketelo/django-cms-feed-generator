@@ -7,6 +7,10 @@ class RSSFeed(Feed):
     link = "/sitenews/"
     description = "Updates on changes and additions to police beat central."
 
+    def __init__(self, name):
+        self.name = name
+        print("IN INIT METHOD")
+        
     def items(self):
         return Site.objects.all()
 
