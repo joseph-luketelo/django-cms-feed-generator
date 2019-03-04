@@ -33,21 +33,25 @@ class CustomFeedGenerator(Rss201rev2Feed):
         handler.addQuickElement(u"tags", item['tags'])
         handler.addQuickElement(u"media:thumbnail", attrs={'url':item['image_url']})
 
-class RSSFeed(Feed):
-    Sitetitle = "Police beat site news"
-    link = "/sitenews/"
+class RSSFeed(Feed):  
+    link = "/"
     description = "Updates on changes and additions to police beat central."
 
     def items(self):
-        return Site.objects.all()
+        site = Site.objects.get_current()
+        feed_pages = Page.objects.published(site=site).order_by('-publication_date')
+        return [feed_page for feed_page in feed_pages if _page_in_rss(feed_page)][:feed_limit]
 
     def item_title(self, item):
-        return item.title
+        # SEO page title or basic title
+        title = item.get_page_title() or item.get_title()
+        return title[:60] if title else ''
 
     def item_description(self, item):
-        return item.description
+        # SEO page description
+        return item.get_meta_description()[:400] if item.get_meta_description() else ''
 
-    # item_link is only needed if NewsItem has no get_absolute_url method.
     def item_link(self, item):
+        #Page url
         return item.get_absolute_url()
 
