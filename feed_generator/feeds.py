@@ -20,6 +20,9 @@ def _page_in_rss(page):
 class CustomFeedGenerator(Rss201rev2Feed):
     """ Custom feed generator. Created to add extra information to the rss feed page"""
     
+    def __init__(self):
+        print("IN INIT METHOD 2")
+        
     def rss_attributes(self):
         """ Overriden this method to add media namespace(needed because we added media tags) """
         return {u"version": self._version,
@@ -37,6 +40,9 @@ class RSSFeed(Feed):
     link = "/"
     feed_type = CustomFeedGenerator
    
+    def __init__(self):
+            print("IN INIT METHOD")
+        
     def title(self):
         return Site.objects.get_current().name
 
