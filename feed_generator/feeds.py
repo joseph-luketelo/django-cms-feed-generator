@@ -8,7 +8,7 @@ from feed_generator.models import PageRSSFeed
 from feed_generator.settings import exclude_keyword, feed_limit
 
 
-def _page_in_rss(page):
+def _page_in_rss(self, page):
     try:
         return not PageRSSFeed.objects.get(page=page).not_visible_in_feed
     except PageRSSFeed.DoesNotExist:
