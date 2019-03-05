@@ -71,8 +71,7 @@ class RSSFeed(Feed):
         the `add_item` call of the feed generator.
         Add the 'tags' field of the Page, to be used by the custom feed generator.
         """
-        result = {'tags':obj.get_meta_keywords(),
-                  'short_description':obj.get_meta_description()[:90] if obj.get_meta_description() else '',
+        result = {'short_description':obj.get_meta_description()[:90] if obj.get_meta_description() else '',
                   'image_url':''}
         try:
             page_rss_feed = PageRSSFeed.objects.get(page=obj)
