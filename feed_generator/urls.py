@@ -4,6 +4,6 @@ from feed_generator.feeds import RSSFeed
 from feed_generator.views import get_file
 
 urlpatterns = [
-  url(r'^rss/$', RSSFeed, name='RSSFeed'),
+  url(r'^rss/$', RSSFeed(), name='RSSFeed'),
 ]
 
