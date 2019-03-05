@@ -30,7 +30,7 @@ class CustomFeedGenerator(Rss201rev2Feed):
     def add_item_elements(self, handler, item):
         super(CustomFeedGenerator, self).add_item_elements(handler, item)
         handler.addQuickElement(u"media:description", item['short_description'])
-        handler.addQuickElement(u"tags", item['tags'])
+        # handler.addQuickElement(u"tags", item['tags'])
         handler.addQuickElement(u"media:thumbnail", attrs={'url':item['image_url']})
 
 class RSSFeed(Feed):
